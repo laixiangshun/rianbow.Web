@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+@model rainbow.Models.Sys.SysLogModel
+
+<div class="mvctool bgb">
+    <a id="btnReturn" style="float:left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-return" style="padding-left:20px;">返回</span></span></a>
+</div>
+
+@using (Html.BeginForm())
+{
+    <table class="form_table setinput355">
+        <tbody>
+            <tr>
+                <th>
+                    @Html.LabelFor(m=>m.Operator)
+                </th>
+                <td>
+                    @Html.EditorFor(m=>m.Operator)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m=>m.Message)
+                </th>
+                <td>
+                    @Html.TextAreaFor(m => m.Message, new { @style="height:100px;"})
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m=>m.Result)
+                </th>
+                <td>
+                    @Html.EditorFor(m=>m.Result)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m=>m.Type)
+                </th>
+                <td>
+                    @Html.EditorFor(m=>m.Type)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m=>m.Module)
+                </th>
+                <td>
+                    @Html.EditorFor(m=>m.Module)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m=>m.CreateTime)
+                </th>
+                <td>
+                    @Html.TextBoxFor(m=>m.CreateTime)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+<script type="text/javascript">
+    $("#btnReturn").click(function () {
+        window.parent.frameReturnByClose();
+    })
+</script>

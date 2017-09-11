@@ -1,0 +1,136 @@
+﻿@model rainbow.Models.Sys.SysSampleModel
+@{
+    ViewBag.Title = "创建";
+    Layout = "~/Views/Shared/_Index_LayoutEdit.cshtml";
+}
+
+<div class="mvctool bgb">
+    <a id="btnSave" style="float:left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-save" style="padding-left:20px;">保存</span></span></a>
+</div>
+
+@using (Html.BeginForm("Create", "SysSample", null, FormMethod.Post, new { Id = "CreateForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table class="fromEditTable setTextWidth300">
+        <tbody>
+            <tr>
+                <td style="width:100px; text-align:right;">
+                    @Html.LabelFor(model => model.Id)：
+                </td>
+                <td style="width:310px">
+                    @Html.EditorFor(model => model.Id)
+                </td>
+                <td>@Html.ValidationMessageFor(model => model.Id)</td>
+            </tr>
+            <tr>
+                <td style="width:100px; text-align:right;">
+                    @Html.LabelFor(model => model.Name)：
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.Name)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(model => model.Name)
+                </td>
+            </tr>
+            <tr>
+                <td style="width:100px; text-align:right;">
+                    @Html.LabelFor(model => model.Age)：
+                </td>
+
+                <td>
+                    @Html.EditorFor(model => model.Age)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(model => model.Age)
+                </td>
+            </tr>
+            <tr>
+                <td style="width:100px; text-align:right;">
+                    @Html.LabelFor(model => model.Bir)：
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.Bir)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(model => model.Bir)
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width:100px; text-align:right;">
+                    @Html.LabelFor(model => model.Note)：
+                </td>
+
+                <td>
+                    @Html.EditorFor(model => model.Note)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(model => model.Note)
+                </td>
+            </tr>
+            <tr>
+                <td style="width:100px; text-align:right;">
+                    @Html.LabelFor(model => model.CreateTime)：
+
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.CreateTime)
+
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(model => model.CreateTime)
+                </td>
+            </tr>
+            <tr>
+                <td style="width:100px; text-align:right;">
+                    @Html.LabelFor(model => model.Photo)：
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Photo)
+
+                </td>
+
+                <td>
+                    @Html.ValidationMessageFor(model => model.Photo)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<div class="mvctool" style="margin-top:20px;position:absolute;right:100px;font-size:18px;cursor:pointer;">
+    <a href="javascript:void(0)" id="close">返回</a>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSave").click(function () {
+            $.ajax({
+                url: "@Url.Action("Edit","SysSample")",
+                type: "post",
+                data: $("#CreateForm").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        window.parent.frameReturnByMes(data.message);
+                        window.parent.frameReturnByReload(true);
+                        window.parent.frameReturnByClose();
+                    } else {
+                        window.parent.frameReturnByMes(data.message);
+                    }
+                }
+            });
+        });
+
+
+
+        $("#close").click(function () {
+            //$("#modalwindow").window('close');
+            window.parent.frameReturnByClose();
+        });
+    });
+</script>

@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "异常处理页面";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+@model rainbow.Web.Core.BaseException
+
+<style type="text/css">
+    h1{
+        font-size:40px;
+        font-weight:500;
+        font-stretch:normal;
+        color:#ff0000;
+        margin-left:200px;
+    }
+    .textshow{
+        font-size:25px;
+        text-align:center;
+        color:#0094ff;
+    }
+    #youhaotishi{
+        /*text-align:center;*/
+        font-size:18px;
+        line-height:20px;
+        border:1px solid #808080;
+        border-radius:2px;
+        padding:10px 30px 10px 0;
+        margin-left:400px;
+        margin-right:200px;
+    }
+    #youhaotishi p{
+        padding:5px;
+        text-align:left;
+        display:block;
+    }
+    #showMessage{
+        font-size:18px;
+        color:#00ffff;
+        margin-top:20px;
+        position:relative;
+        display:block;
+    }
+    #detailInformation {
+        border: 1px solid #808080;
+        display:none;
+        margin-top:20px;
+        border-radius: 5px 5px;
+        margin-left:400px;
+        width:1000px;
+        /*margin-right:100px;*/
+        position:relative;
+        padding:5px 5px;
+    }
+    #detailInformation tr{
+        height:35px;
+        margin:5px;
+        line-height:35px;
+    }
+</style>
+<link  type="text/css" href="~/Content/bootstrap.min.css" rel="stylesheet"/>
+<h1>系统错误</h1>
+<div>
+    <div class="textshow"><span> &nbsp;错误处理页面</span></div>
+    <div id="youhaotishi">
+        &nbsp;欢迎您光临本网站！网站运行发生错误，请与管理员联系。错误原因可能如下:
+        <p> &nbsp;&nbsp;&nbsp;1.非法访问页面.</p>
+        <p>&nbsp;&nbsp;&nbsp;2.您输入的数据错误.</p>
+        <p> &nbsp;&nbsp;&nbsp;3.您访问的页面不存在.</p>
+        <p> &nbsp;&nbsp;&nbsp;4.内容不存在,或已被删除.</p>
+        <p> &nbsp;&nbsp;&nbsp;5.系统忙,请稍候再试.</p>
+    </div>
+</div>
+<div style="text-align:center;">
+    <table width="100%" class="blueTab table table-hover table-striped table-bordered" border="0" cellspacing="1" cellpadding="1" id="detailInformation">
+        <tbody>
+            <tr>
+                <td width="20%" class="alignRight" nowrap>
+                    <strong>出错页面：</strong>
+                </td>
+                <td class="alignLeft">
+                    @Html.DisplayFor(model => model.ErrorPageUrl)
+                </td>
+            </tr>
+            <tr>
+                <td class="alignRight" nowrap>
+                    <strong>异常名称：</strong>
+                </td>
+                <td class="alignLeft">
+                    @Html.DisplayFor(model => model.ExceptionName)
+                </td>
+            </tr>
+            <tr>
+                <td class="alignRight" nowrap>
+                    <strong>异常信息：</strong>
+                </td>
+                <td class="alignLeft">
+                    @Html.DisplayFor(model => model.ExceptionMessage)
+                </td>
+            </tr>
+            <tr id="trInnerExceptionName">
+                <td class="alignRight" nowrap>
+                    <strong>内部异常名称：</strong>
+                </td>
+                <td class="alignLeft">
+                    @Html.DisplayFor(model => model.InnerExceptionName)
+                </td>
+            </tr>
+            <tr id="trInnerExceptionMessage">
+                <td class="alignRight" nowrap>
+                    <strong>内部异常信息：</strong>
+                </td>
+                <td class="alignLeft">
+                    @Html.DisplayFor(model => model.InnerExceptionMessage)
+                </td>
+            </tr>
+            <tr id="trExceptionMethod">
+                <td class="alignRight" nowrap>
+                    <strong>方法名称：</strong>
+                </td>
+                <td class="alignLeft">
+                    &nbsp;@Html.DisplayFor(model => model.TargetSite)
+                </td>
+            </tr>
+            <tr id="trExceptionSource">
+                <td class="alignRight" nowrap>
+                    <strong>源文件：</strong>
+                </td>
+                <td class="alignLeft">
+                    @Html.DisplayFor(model => model.SourceErrorFile)
+                </td>
+            </tr>
+            <tr id="trExceptionRowId">
+                <td class="alignRight" nowrap>
+                    <strong>行号：</strong>
+                </td>
+                <td class="alignLeft" style="color: Red">
+                    &nbsp;@Html.DisplayFor(model => model.SourceErrorRowID)
+                </td>
+            </tr>
+            <tr id="trStack">
+                <td class="alignRight">
+                    <strong>堆栈跟踪：</strong>
+                </td>
+                <td class="alignLeft" style="background-color: #ffffcc;">
+                    <code>
+                        <pre id="litStack"><textarea name="errormsg" cols="100" rows="30" readonly="readonly">@Html.DisplayFor(model => model.StackInfo) </textarea> </pre>
+                    </code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="btn_a"><a id="showMessage" href="#" onclick="ShowErrorMessage();return false;">显示详细信息</a></div>
+</div>
+<script type="text/javascript">
+    var isshow = true;
+    function ShowErrorMessage() {
+        var showMessage = $("#showMessage");
+        var detailInformation = $("#detailInformation");
+        var youhaotishi = $("#youhaotishi");
+        if (isshow) {
+            showMessage.text("隐藏详细信息");
+            detailInformation.show();
+            youhaotishi.hide();
+            isshow=false;
+        } else {
+            isshow = true;
+            showMessage.text("显示详细信息");
+            detailInformation.hide();
+            youhaotishi.show();
+        }
+    }
+</script>

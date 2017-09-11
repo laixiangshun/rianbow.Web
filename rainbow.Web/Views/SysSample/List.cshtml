@@ -1,0 +1,214 @@
+﻿
+@using rainbow.Models.Sys;
+@using rainbow.Locale;
+@using System.Globalization;
+@using System.Threading;
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+    List<permModel> perm = (List<permModel>)ViewBag.Perm;
+    if (perm == null)
+    {
+        perm = new List<permModel>();
+    }
+    CultureInfo info = Thread.CurrentThread.CurrentCulture; //获取当然选中的是什么语言
+}
+@Scripts.Render("~/bundles/easyuiplus")
+<style type="text/css">
+    .mvctool {
+        display:inline-block;
+        vertical-align:text-top;
+    }
+     .mvctool a {
+        display: block;
+        line-height: 30px;
+    }
+</style>
+<div id="modalwindow" class="easyui-window" data-options="modal:true,closed:true,minimizable:false,shadow:false"></div>
+
+@* 增加权限管控按钮 *@
+<div class="mvctool">
+    @*<input id="txtQuery" type="text" class="searchText"/>
+    <a id="btnQuery" style="float:left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-search" style="padding-left:20px;display:inline;">查询</span></span></a><div class="datagrid-btn-separator"></div>
+    <a id="btnCreate" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-add" style="padding-left: 20px; display: inline;">新增</span></span></a><div class="datagrid-btn-separator"></div>
+    <a id="btnEdit" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-edit" style="padding-left: 20px; display: inline;">编辑</span></span></a><div class="datagrid-btn-separator"></div>
+    <a id="btnDetails" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-details" style="padding-left: 20px; display: inline;">详细</span></span></a><div class="datagrid-btn-separator"></div>
+    <a id="btnDelete" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-remove" style="padding-left: 20px; display: inline;">删除</span></span></a><div class="datagrid-btn-separator"></div>
+    <a id="btnExport" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-export" style="padding-left: 20px; display: inline;">导出</span></span></a>
+    <a id="btnReload" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-reload" style="padding-left: 20px; display: inline;">刷新</span></span></a>*@
+    <input id="txtQuery" type="text" class="searchText" />
+    @Html.ToolButton("btnQuery", "icon-search", BaseRes.Query, perm, "Query", true)
+    @Html.ToolButton("btnCreate", "icon-add", BaseRes.Create, perm, "Create", true)
+    @Html.ToolButton("btnEdit", "icon-edit", BaseRes.Edit, perm, "Edit", true)
+    @Html.ToolButton("btnDetails", "icon-details", BaseRes.Details, perm, "Details", true)
+    @Html.ToolButton("btnDelete", "icon-remove", BaseRes.Delete, perm, "Delete", true)
+    @Html.ToolButton("btnExport", "icon-export", BaseRes.Export, perm, "Export", true)
+</div>
+
+<table id="List"></table>
+<script type="text/javascript">
+    $(function () {
+        $("#List").datagrid({
+            url: "@Url.Action("GetListData", "SysSample")",
+            width: $(window).width() - 10,
+            method: "post",
+            height: $(window).height() - 40,
+            fitColumns: true,
+            sortName: "CreateTime",
+            sortOrder: "desc",
+            idField: "Id",
+            nowrap: false,
+            fit:false,//自动大小
+            //pageSize: 10,//每页数量
+            //pageList: [10, 20, 30, 40],//可选择的每页数量
+            pagination: true,//启用分页
+            striped: true,//基偶行是否区分
+            singleSelect: true,//单选模式d
+            rownumbers: true,//行号
+            columns: [[
+                {field: "Id",checkbox: true},
+                //{ field: "Id", title: "ID", width: 80 },
+                { field: "Name", title: "名称", wigth: 120 },
+                { field: "Age", title: "年龄", width: 80, align: "right" },
+                {
+                    field: "Bir", title: "生日", width: 80, align: "right"
+                    //, formatter: function (value) {
+                    //    var date = new Date(value);
+                    //    var y = date.getFullYear();
+                    //    var m = date.getMonth() + 1;
+                    //    var d = date.getDate();
+                    //    return y + "-" + m + "-" + d;
+                    //}
+                },
+                { field: "Photo", title: "照片", width: 250 },
+                { field: "Note", title: "说明", width: 60, align: "center" },
+                {
+                    field: "CreateTime", title: "创建时间", width: 60, align: "center",
+                        formatter: function (value, row, index) {
+                            return dataFormatter(value);
+                    }
+                }
+            ]]
+        });
+        $("#List").datagrid("getPager").pagination({
+                    //showRefresh:true,
+                    pageSize: 10,
+                    pageNumber: 1,
+                    pageList: [10, 20, 30, 40],
+                    beforePageText: "第",
+                    afterPageText: "页",
+                    displayMsg: "显示{from}到{to}条记录 共{total}条记录"
+                    //onSelectPage: function (pageNo, pageSize) {
+                    //    var start = (pageNo - 1) * pageSize;
+                    //    var end = start + pageSize;
+                    //    $("#List").datagrid("loadData", data.slice(start, end));
+                    //    $("#List").datagrid("getPager").pagination("refresh", {
+                    //        pageNumber: pageNo
+                    //    });
+                    //}
+        });
+
+
+
+        //新增
+        $("#btnCreate").click(function () {
+            $("#modalwindow").html("<iframe width='100%' height='98%' scrolling='no' frameborder='0' src='@Url.Action("Create", "SysSample")'></iframe>");
+            $("#modalwindow").window({
+                title: "新增",
+                width: 700,
+                height: 400,
+                iconCls: 'icon-add',
+                //top: 100,
+                //left:(document.body.clientWidth-700)/2
+            }).window('open');
+        });
+        
+        $("#btnEdit").click(function () {
+            var row = $("#List").datagrid('getSelected');//选择的行
+            if (row != null) {
+                $("#modalwindow").html("<iframe width='100%' height='99%' frameborder='0' src='/SysSample/Edit?id=" + row.Id + "&Ieguid=" + GetGuid() + "'></iframe>");
+                $("#modalwindow").window({
+                    title: "编辑",
+                    width: 700,
+                    height: 430,
+                    iconCls: 'icon-edit',
+                    //top: 100,
+                    //left: (document.body.clientWidth - 700) / 2
+                }).window('open');
+            } else {
+                $.messageBox5s("提示", "请选择要操作的记录");
+            }
+        });
+        $("#btnDetails").click(function () {
+            var row = $("#List").datagrid("getSelected");
+            if (row != null) {
+                $("#modalwindow").html("<iframe width='100%' height='98%' scrolling='no' frameborder='0' src='/SysSample/Details?id=" + row.Id + "&Ieguid=" + GetGuid() + "'></iframe>");
+                $("#modalwindow").window({
+                    title: "详情",
+                    width: 700,
+                    height: 430,
+                    iconCls: 'icon-detail',
+                    //top: 100,
+                    //left: (document.body.clientWidth - 700) / 2
+                }).window('open');
+            }else{
+                $.messageBox5s("提示","请选择要操作的记录");
+            }
+        });
+
+        $("#btnDelete").click(function () {
+            var row = $("#List").datagrid("getSelected");
+            if (row != null) {
+                $.messager.confirm("提示", "确定删除？", function (r) {
+                    if (r) {
+                        $.post("/SysSample/Delete?id=" + row.Id, function (data) {
+                            if (data.success == true) {
+                                $("#List").datagrid("load");
+                            }
+                            $.messageBox5s("提示", data.message);
+                        }, "json");
+                    }
+                });
+            } else {
+                $.messageBox5s("提示", "请选择要操作的记录");
+            }
+        });
+
+        $("#btnQuery").click(function () {
+            var queryStr = $("#txtQuery").val();
+            if (queryStr == null) {
+                queryStr = "%";
+            }
+            $("#List").datagrid({
+                url: "/SysSample/GetListData?queryStr="+encodeURI(queryStr)
+             });
+        });
+
+    });
+
+    //iframe返回，window关闭
+    function frameReturnByClose() {
+        $("#modalwindow").window("close");
+    }
+
+    //iframe返回并刷新
+    function frameReturnByReload(flag) {
+        if (flag) {
+            $("#List").datagrid("load");
+        } else {
+            $("#List").datagrid('reload');
+        }
+    }
+
+    function frameReturnByMes(msg) {
+        $.messageBox5s("提示", msg);
+    }
+
+    function GetGuid() {
+        var s4 = function () {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        };
+        return s4() + s4() + s4() + "_" + s4();
+    }
+</script>
+

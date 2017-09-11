@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+@model rainbow.Models.Sys.SysLogModel
+
+@Scripts.Render("~/bundles/easyuiplus")
+
+<div class="mvctool">
+    <input id="txtQuery" type="text" class="searchText"/>
+    <a id="btnQuery" style="float:left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-search" style="padding-left:20px;">查询</span></span></a>
+    <a id="btnDetails" style="float:left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-details" style="padding-left:20px;">详细</span></span></a>
+    <a id="btnDelete" style="float:left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-remove" style="padding-left:20px;">删除</span></span></a>
+</div>
+
+<table id="List"></table>
+<div id="Pager"></div>
+<div id="modalwindow" class="easyui-window" data-options="model:true,closed:true,minimizable:false,shadow:false"></div>
+
+
+<script type="text/javascript">
+    //ifram 返回
+    function frameReturnByClose() {
+        $("#modalwindow").window('close');
+    }
+    function frameReturnByReload(flag) {
+        if (flag)
+            $("#List").datagrid('load');
+        else
+            $("#List").datagrid('reload');
+    }
+    function frameReturnByMes(mes) {
+        $.messageBox5s('提示', mes);
+    }
+    $(function () {
+        $("#List").datagrid({
+            url: "/SysLog/GetList",
+            width: $(window).width() - 10,
+            method: "post",
+            height: $(window).height() - 35,
+            fitColumns: true,
+            sortName: "Id",
+            sortOrder: "desc",
+            idField: "Id",
+            pageSize: 10,
+            pageList: [10, 20, 30, 40],
+            pagination: true,
+            striped: true,//基偶是否区分
+            singleSelect: true,//单选模式
+            rownumbers: true,//行号
+            columns: [[
+                //{ field: "Id", title: "ID", width: 40, hidden: true },
+                { field: "Id", checkbox: true },
+                { field: "Operator", title: "操作人", width: 40 },
+                { field: "Message", title: "信息", width: 280 },
+                { field: "Result", title: "结果", width: 40, align: 'center' },
+                { field: "Type", title: "类型", width: 40, align: 'center' },
+                { field: "Module", title: "模块", width: 60, align: 'center' },
+                { field: "CreateTime", title: "添加时间", width: 65, align: 'center' }
+            ]]
+        });
+        $("#List").datagrid("getPager").pagination({
+            //showRefresh:true,
+            pageSize: 10,
+            pageNumber: 1,
+            pageList: [10, 20, 30, 40],
+            beforePageText: "第",
+            afterPageText: "页",
+            displayMsg: "显示{from}到{to}条记录 共{total}条记录"
+            //onSelectPage: function (pageNo, pageSize) {
+            //    var start = (pageNo - 1) * pageSize;
+            //    var end = start + pageSize;
+            //    $("#List").datagrid("loadData", data.slice(start, end));
+            //    $("#List").datagrid("getPager").pagination("refresh", {
+            //        pageNumber: pageNo
+            //    });
+            //}
+        });
+
+        $("#btnDetails").click(function () {
+            var row = $("#List").datagrid("getSelected");
+            if (row != null) {
+                $("#modalwindow").html("<iframe width='99%' height='98%' scrolling='no',frameborder='0' src='/SysLog/Details?id=" + row.Id + "&guid=" + GetGuid() + "'></iframe>");
+                $("#modalwindow").window({
+                    title: "详情",
+                    width: 700,
+                    height: 400,
+                    iconCls: 'icon-details',
+                    //top: 100,
+                    //left: (document.body.clientWidth - 700) / 2
+                }).window("open");
+            } else {
+                $.messageBox5s("提示", "请选择一条记录");
+            }
+        });
+
+        $("#btnQuery").click(function () {
+            var queryStr = $("#txtQuery").val();
+            if (queryStr == null) {
+                queryStr = "%";
+            } else {
+                $("#List").datagrid({
+                    url: "/SysLog/GetList?queryStr=" + encodeURI(queryStr)
+                });
+            }
+        });
+
+        $("#btnDelete").click(function () {
+            var row = $("#List").datagrid("getSelected");
+            if (row != null) {
+                $.messager.confirm("提示", "确定删除吗？", function (r) {
+                    if (r) {
+                        $.post("/SysLog/Delete?id=" + row.Id, function (data) {
+                            if (data.success == true) {
+                                $("#List").datagrid("reload");
+                            }
+                            $.messageBox5s("提示", data.message);
+                        }, "json");
+                    }
+                });
+            } else {
+                $.messageBox5s("提示", "请选择一条记录删除");
+            }
+        });
+    });
+
+    function GetGuid() {
+        var s4 = function () {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        }
+        return s4() + s4() + s4() + "_" + s4();
+    }
+</script>

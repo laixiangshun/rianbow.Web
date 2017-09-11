@@ -1,0 +1,90 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.Web", "rainbow.Web\rainbow.Web.csproj", "{B27E2674-D1AD-4544-9B5B-89E3A394B782}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.BLL", "rainbow.BLL\rainbow.BLL.csproj", "{AC622A14-61AE-417A-B8C1-C86665D8FCAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.IBLL", "rianbow.IBLL\rainbow.IBLL.csproj", "{9A002408-3322-4EDB-AA4C-B20B2F9A6313}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.DAL", "rainbow.DAL\rainbow.DAL.csproj", "{9597A50B-A54B-4062-BAA9-CE6159BDEAF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.IDAL", "rainbow.IDAL\rainbow.IDAL.csproj", "{A2992911-C8B4-4A2E-AE69-52D8D6EB4C47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.Models", "rainbow.Models\rainbow.Models.csproj", "{0B00DBD2-5CAE-408C-9583-36C2A2ECADF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.Common", "rainbow.Common\rainbow.Common.csproj", "{B36896ED-04EB-454C-8EE7-51B5D78DA2B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.Code", "rainbow.Code\rainbow.Code.csproj", "{EAF21983-A239-4835-B7D4-EEA1D0587C91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.Locale", "rainbow.Locale\rainbow.Locale.csproj", "{3E63F419-75C0-48C5-BCDB-4CBB3649CE62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.WebApi", "rainbow.WebApi\rainbow.WebApi.csproj", "{1035DDEB-C938-4A39-80BB-63874192B485}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rainbow.Base", "rainbow.Base", "{856666A6-2B25-45A4-B769-5F7071497A76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rainbow.Jobs", "rainbow.Jobs\rainbow.Jobs.csproj", "{39DB0828-F1A5-4DE3-9364-EC0F5052782E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B27E2674-D1AD-4544-9B5B-89E3A394B782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B27E2674-D1AD-4544-9B5B-89E3A394B782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B27E2674-D1AD-4544-9B5B-89E3A394B782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B27E2674-D1AD-4544-9B5B-89E3A394B782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC622A14-61AE-417A-B8C1-C86665D8FCAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC622A14-61AE-417A-B8C1-C86665D8FCAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC622A14-61AE-417A-B8C1-C86665D8FCAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC622A14-61AE-417A-B8C1-C86665D8FCAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A002408-3322-4EDB-AA4C-B20B2F9A6313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A002408-3322-4EDB-AA4C-B20B2F9A6313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A002408-3322-4EDB-AA4C-B20B2F9A6313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A002408-3322-4EDB-AA4C-B20B2F9A6313}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9597A50B-A54B-4062-BAA9-CE6159BDEAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9597A50B-A54B-4062-BAA9-CE6159BDEAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9597A50B-A54B-4062-BAA9-CE6159BDEAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9597A50B-A54B-4062-BAA9-CE6159BDEAF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2992911-C8B4-4A2E-AE69-52D8D6EB4C47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2992911-C8B4-4A2E-AE69-52D8D6EB4C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2992911-C8B4-4A2E-AE69-52D8D6EB4C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2992911-C8B4-4A2E-AE69-52D8D6EB4C47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B00DBD2-5CAE-408C-9583-36C2A2ECADF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B00DBD2-5CAE-408C-9583-36C2A2ECADF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B00DBD2-5CAE-408C-9583-36C2A2ECADF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B00DBD2-5CAE-408C-9583-36C2A2ECADF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B36896ED-04EB-454C-8EE7-51B5D78DA2B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B36896ED-04EB-454C-8EE7-51B5D78DA2B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B36896ED-04EB-454C-8EE7-51B5D78DA2B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B36896ED-04EB-454C-8EE7-51B5D78DA2B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF21983-A239-4835-B7D4-EEA1D0587C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF21983-A239-4835-B7D4-EEA1D0587C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF21983-A239-4835-B7D4-EEA1D0587C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF21983-A239-4835-B7D4-EEA1D0587C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E63F419-75C0-48C5-BCDB-4CBB3649CE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E63F419-75C0-48C5-BCDB-4CBB3649CE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E63F419-75C0-48C5-BCDB-4CBB3649CE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E63F419-75C0-48C5-BCDB-4CBB3649CE62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1035DDEB-C938-4A39-80BB-63874192B485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1035DDEB-C938-4A39-80BB-63874192B485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1035DDEB-C938-4A39-80BB-63874192B485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1035DDEB-C938-4A39-80BB-63874192B485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39DB0828-F1A5-4DE3-9364-EC0F5052782E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39DB0828-F1A5-4DE3-9364-EC0F5052782E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39DB0828-F1A5-4DE3-9364-EC0F5052782E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39DB0828-F1A5-4DE3-9364-EC0F5052782E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AC622A14-61AE-417A-B8C1-C86665D8FCAD} = {856666A6-2B25-45A4-B769-5F7071497A76}
+		{9A002408-3322-4EDB-AA4C-B20B2F9A6313} = {856666A6-2B25-45A4-B769-5F7071497A76}
+		{9597A50B-A54B-4062-BAA9-CE6159BDEAF9} = {856666A6-2B25-45A4-B769-5F7071497A76}
+		{A2992911-C8B4-4A2E-AE69-52D8D6EB4C47} = {856666A6-2B25-45A4-B769-5F7071497A76}
+	EndGlobalSection
+EndGlobal

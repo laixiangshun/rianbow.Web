@@ -1,0 +1,78 @@
+﻿@using rainbow.Models.Sys;
+@model rainbow.Models.Sys.SysRoleModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Index_LayoutEdit.cshtml";
+    List<permModel> perm = (List<permModel>)ViewBag.Perm;
+    if (perm == null)
+    {
+        perm = new List<permModel>();
+    }
+}
+
+<div class="mvctool bgb">
+    @Html.ToolButton("btnSave", "icon-save", "保存", perm, "Save", true)
+    @Html.ToolButton("btnReturn", "icon-return", "返回", false)
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.CreateTime)
+    @Html.HiddenFor(model=>model.CreatePerson)
+    <table class="fromEditTable setTextWidth300">
+        <tbody>
+            <tr>
+                <td style="width:100px;text-align:center;">
+                    @Html.LabelFor(model => model.Name):
+                </td>
+                <td style="width:410px;">
+                    @Html.EditorFor(model => model.Name, new { @width = "400px" })
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(model => model.Name)
+                </td>
+            </tr>
+            <tr>
+                <td style="width:100px;text-align:center;">
+                    @Html.LabelFor(model => model.Description)
+                </td>
+                <td style="width:410px;">
+                    @Html.TextAreaFor(model => model.Description, new { @cols = "50", @rows = "15" })
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(model => model.Description)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+<script type="text/javascript">
+    $(function () {
+        $("#btnSave").click(function () {
+            if ($("form").valid()) {
+                $.ajax({
+                    url: "@Url.Action("Edit")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            window.parent.frameReturnByMes(data.message);
+                            window.parent.frameReturnByReload(true);
+                            window.parent.frameReturnByClose();
+                        } else {
+                            window.parent.frameReturnByMes(data.message);
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+        $("#btnReturn").click(function () {
+            window.parent.frameReturnByClose();
+        })
+    })
+</script>
+
+

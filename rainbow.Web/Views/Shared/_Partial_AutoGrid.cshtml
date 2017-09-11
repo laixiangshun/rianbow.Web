@@ -1,0 +1,21 @@
+﻿
+<script type="text/javascript">
+    $(function () {
+        $(window).resize(function () {
+            $("#List").datagrid("resize", {
+                width: $(window).width() - 20,
+                height: $(window).height()-40
+            }).datagrid("resize", {
+                width: $(window).width() - 20,
+                height: $(window).height() - 40
+            });
+        });
+    });
+
+    function GetGuid() {
+        var f4 = function () {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        }
+        return f4() + f4() + f4() + "_" + f4();
+    }
+</script>

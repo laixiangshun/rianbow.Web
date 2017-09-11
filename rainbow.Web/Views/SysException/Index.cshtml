@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+@model rainbow.Models.Sys.SysExceptionModel
+@Scripts.Render("~/bundles/easyuiplus")
+<div class="mvctool">
+    <input type="text" id="txtQuery" class="searchText"/>
+    <a id="btnQuery" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-search" style="padding-left: 20px;">查询</span></span></a><div class="datagrid-btn-separator"></div>
+    <a id="btnDetails" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-details" style="padding-left: 20px;">详细</span></span></a><div class="datagrid-btn-separator"></div>
+    <a id="btnDelete" style="float: left;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="l-btn-text icon-remove" style="padding-left: 20px;">删除</span></span></a>
+</div>
+
+<table id="List"></table>
+<div id="pager"></div>
+<div class="easyui-window" id="modalwindow" data-options="modal:true,closed:true,minimizable:false,shadow:false"></div>
+<script type="text/javascript">
+    $(function () {
+        $("#List").datagrid({
+            url: "@Url.Action("GetList", "SysException")",
+            width: $(window).width() - 10,
+            method: "post",
+            height: $(window).height() - 35,
+            fitColumns: true,
+            sortName: "Id",
+            sortOrder: "desc",
+            idField: "Id",
+            pageSize: 10,
+            pageList: [10, 20, 30, 40],
+            pagination: true,
+            striped: true,//奇偶行是否区分
+            singleSelect: true,//单选模式
+            rownumbers:true,
+            columns: [[
+                //{ field: "Id", title: "ID", width: 40, hidden: true },
+                { field: "Id", checkbox: true },
+                { field: 'HelpLink', title: '帮助链接', width: 100 },
+                { field: 'Message', title: '异常信息', width: 400 },
+                { field: 'Source', title: '来源', width: 150 },
+                { field: 'StackTrace', title: '堆栈', width: 200, align: 'center' },
+                { field: 'TargetSite', title: '目标页', width: 150, align: 'center' },
+                { field: 'Data', title: '程序集', width:150, align: 'center' },
+                { field: 'CreateTime', title: '发生时间', width: 150, align: 'center' }
+            ]]
+        });
+        $("#List").datagrid("getPager").pagination({
+            //showRefresh:true,
+            pageSize: 10,
+            pageNumber: 1,
+            pageList: [10, 20, 30, 40],
+            beforePageText: "第",
+            afterPageText: "页",
+            displayMsg: "显示{from}到{to}条记录 共{total}条记录"
+            //onSelectPage: function (pageNo, pageSize) {
+            //    var start = (pageNo - 1) * pageSize;
+            //    var end = start + pageSize;
+            //    $("#List").datagrid("loadData", data.slice(start, end));
+            //    $("#List").datagrid("getPager").pagination("refresh", {
+            //        pageNumber: pageNo
+            //    });
+            //}
+        });
+    });
+    $("#btnDetails").click(function () {
+        var row = $("#List").datagrid("getSelected");
+        if (row != null) {
+            $("#modalwindow").html("<iframe width='100%' height='99%' frameborder='0' scrolling='no' src='/SysException/Details?id=" + row.Id + "&nid=" + GUID() + "'></iframe>");
+            $("#modalwindow").window({
+                title: "详细",
+                width: 700,
+                height: 600,
+                iconCls: 'icon-details',
+                //top: 100,
+                //left: (document.body.clientWidth - 700) / 2
+            }).window("open");
+        } else {
+            $.messageBox5s("提示", "请选择一行");
+        }
+    });
+    $("#btnQuery").click(function () {
+        var queryStr = $("#txtQuery").val();
+        if (queryStr == null) {
+            queryStr = "%";
+        }
+        $("#List").datagrid({
+            url: "/SysException/GetList?queryStr=" + encodeURI(queryStr)
+        });
+    });
+    $("#btnDelete").click(function () {
+        var row = $("#List").datagrid("getSelected");
+        if (row != null) {
+            $.messager.confirm("提示", "确定删除？", function (r) {
+                if (r) {
+                    $.post("/SysException/Delete?id=" + row.Id, function (data) {
+                        if (data.success = true) {
+                            $("#List").datagrid("reload");
+                        }
+                        $.messageBox5s("提示", data.message);
+                    }, "json")
+                }
+            });
+        } else {
+            $.messageBox5s("提示", "请选择一行删除");
+        }
+    });
+    //ifram 返回
+    function frameReturnByClose() {
+        $("#modalwindow").window('close');
+    }
+
+    function GUID() {
+        var s4 = function () {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        }
+        return s4() + s4() + s4() + "_" + s4();
+    }
+</script>
